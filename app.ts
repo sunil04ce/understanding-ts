@@ -1,22 +1,43 @@
-console.log("TS code goes here..");
+// const person: {
+//   name: string;
+//   age: number;
+// } = {
 
-const add = (n1: number, n2: number, showResult: boolean, phrase: string) => {
-  //   if (typeof n1 !== "number" || typeof n2 !== "number") {
-  //     throw new Error("Innocent input!");
-  //   }
-  const result = n1 + n2;
-  if (showResult) {
-    console.log(phrase + result);
-  } else {
-    return result;
-  }
+enum UserRole {
+  ADMIN = "ADMIN",
+  READ_ONLY = 10,
+  STUDENT = 200,
+  AUTHOR = "AUTHOR",
+}
+
+const person: {
+  name: string;
+  age: number;
+  hobbies: string[];
+  role: [number, string];
+  userRole: UserRole;
+} = {
+  name: "Jack",
+  age: 37,
+  hobbies: ["Sports", "Cooking"],
+  role: [2, "author"],
+  userRole: UserRole.ADMIN,
 };
 
-let number1: number;
-number1 = 4;
-const number2 = 2.4;
-const printResult = true;
-let resultPhrase = "Result is : ";
-const result = add(number1, number2, printResult, resultPhrase);
+person.role.push("admin");
+// person.role[1] = 10;
+// person.role = [0, 'admin', 'user'];
 
-// console.log(result);
+let favoriteActivities: string[];
+favoriteActivities = ["Sports"];
+
+console.log(person.name);
+
+for (const hobby of person.hobbies) {
+  console.log(hobby.toUpperCase());
+  // console.log(hobby.map());
+}
+
+if (person.userRole === UserRole.ADMIN) {
+  console.log("UserRole is admin");
+}
