@@ -1,43 +1,24 @@
-// const person: {
-//   name: string;
-//   age: number;
-// } = {
+type Combinable = string | number;
+type ConversionDescriptor = "as-number" | "as-text";
 
-enum UserRole {
-  ADMIN = "ADMIN",
-  READ_ONLY = 10,
-  STUDENT = 200,
-  AUTHOR = "AUTHOR",
-}
+const combine = (
+  input1: Combinable,
+  input2: Combinable,
+  resultConversion: ConversionDescriptor
+) => {
+  let result;
 
-const person: {
-  name: string;
-  age: number;
-  hobbies: string[];
-  role: [number, string];
-  userRole: UserRole;
-} = {
-  name: "Jack",
-  age: 37,
-  hobbies: ["Sports", "Cooking"],
-  role: [2, "author"],
-  userRole: UserRole.ADMIN,
+  if (
+    (typeof input1 === "number" && typeof input2 === "number") ||
+    resultConversion === "as-number"
+  ) {
+    result = +input1 + +input2;
+  } else {
+    result = input1.toString() + input2.toString();
+  }
+  return result;
 };
 
-person.role.push("admin");
-// person.role[1] = 10;
-// person.role = [0, 'admin', 'user'];
-
-let favoriteActivities: string[];
-favoriteActivities = ["Sports"];
-
-console.log(person.name);
-
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
-  // console.log(hobby.map());
-}
-
-if (person.userRole === UserRole.ADMIN) {
-  console.log("UserRole is admin");
-}
+console.log(combine(50, 47, "as-number"));
+console.log(combine("50", "40", "as-number"));
+console.log(combine("Jack", "Sparro", "as-text"));
