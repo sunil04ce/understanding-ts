@@ -1,35 +1,72 @@
 "use strict";
-console.log("app.js ");
-function addNumber(a, b) {
-    let result;
-    result = a + b;
-    return result;
+class Department {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+        this.employees = [];
+    }
+    describe() {
+        console.log(`Department (${this.id}) : ${this.name}`);
+    }
+    addEmployee(employee) {
+        this.employees.push(employee);
+    }
+    printEmployeeInfo() {
+        console.log(`Total employees are : ${this.employees.length}  -->  ${this.employees}`);
+    }
 }
-console.log(addNumber(5, 7));
-const add = (x, y = 1) => x + y;
-const printOut = (output) => console.log(output);
-printOut(add(6, 8));
-printOut(add(10));
-const hobbies = ["Sports", "Cooking"];
-const activeHabbies = ["Hiking", "Reading"];
-activeHabbies.push(...hobbies);
-console.log(activeHabbies);
-const person = {
-    firstName: "Jack",
-    age: 37,
-};
-const copiedPerson = Object.assign(Object.assign({}, person), { gender: "M" });
-console.log(copiedPerson);
-const addMultiNumbers = (...allNumbers) => {
-    return allNumbers.reduce((curResult, curValue) => {
-        return curResult + curValue;
-    }, 0);
-};
-const addedNumbers = addMultiNumbers(5, 10, 20, 30, 3.5, 4);
-console.log("result of add multiple numbers --> " + addedNumbers);
-const [hobby1, hobby2, ...remainingHobbies] = activeHabbies;
-console.log("hobby1 -> " + hobby1);
-console.log("hobby2 -> " + hobby2);
-console.log("remainingHobbies -> " + remainingHobbies);
-const { firstName: userName, age } = person;
-console.log(userName, age, person);
+class ITDepartment extends Department {
+    constructor(id, admins) {
+        super(id, "IT");
+        this.admins = admins;
+    }
+}
+const itDept = new ITDepartment("id1", ["Jack"]);
+itDept.addEmployee("Jack");
+itDept.addEmployee("Richard");
+itDept.describe();
+itDept.printEmployeeInfo();
+console.log(itDept);
+class AccountDepartment extends Department {
+    get mostRecentReport() {
+        if (this.lastReport) {
+            return this.lastReport;
+        }
+        throw new Error("No report found.");
+    }
+    set mostRecentReport(value) {
+        if (value) {
+            this.addReport(value);
+        }
+        else {
+            throw new Error("Please pass valid value for report.");
+        }
+    }
+    constructor(id, reports) {
+        super(id, "Accounting");
+        this.reports = reports;
+        this.lastReport = reports[0];
+    }
+    addEmployee(name) {
+        if (name === "Jack") {
+            return;
+        }
+        this.employees.push(name);
+    }
+    addReport(text) {
+        this.reports.push(text);
+        this.lastReport = text;
+    }
+    printReports() {
+        console.log(this.reports);
+    }
+}
+const accountingDept = new AccountDepartment("id2", []);
+accountingDept.mostRecentReport = "Report 0";
+accountingDept.addReport("Report 1");
+console.log(`mostRecentReport : -> ${accountingDept.mostRecentReport}`);
+accountingDept.printReports();
+accountingDept.addEmployee("Jack");
+accountingDept.addEmployee("Karle");
+accountingDept.printEmployeeInfo();
+console.log(accountingDept);

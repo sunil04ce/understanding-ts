@@ -1,58 +1,101 @@
-console.log("app.js ");
+class Department {
+  //   public id: string;
+  //   public name: string;
 
-function addNumber(a: number, b: number) {
-  let result;
-  result = a + b;
-  return result;
+  protected employees: string[] = [];
+
+  constructor(public readonly id: string, public name: string) {
+    // this.name = n;
+  }
+
+  describe(this: Department) {
+    console.log(`Department (${this.id}) : ${this.name}`);
+  }
+
+  addEmployee(employee: string) {
+    // this.id = "d2";
+    this.employees.push(employee);
+  }
+
+  printEmployeeInfo() {
+    console.log(
+      `Total employees are : ${this.employees.length}  -->  ${this.employees}`
+    );
+  }
 }
-// console.log(result);
-console.log(addNumber(5, 7));
 
-// let age = 30;
-// age = 29;
-// if (age > 20) {
-//   let isOld = true; // not allowed outside of block scope
-//   var isRealyOld = true; // allowed to access outside of block scope, var only knows global and function scope
-// }
-// console.log(isOld);
-// console.log(isRealyOld);
+class ITDepartment extends Department {
+  constructor(id: string, public admins: string[]) {
+    super(id, "IT");
+  }
+}
 
-const add = (x: number, y: number = 1) => x + y;
+const itDept = new ITDepartment("id1", ["Jack"]);
+itDept.addEmployee("Jack");
+itDept.addEmployee("Richard");
 
-const printOut = (output: number | string) => console.log(output);
+//accounting.name = "NEW NAME";
+// accounting.employees[2] = "Mark";
 
-printOut(add(6, 8));
-printOut(add(10));
+itDept.describe();
+itDept.printEmployeeInfo();
+console.log(itDept);
 
-const hobbies = ["Sports", "Cooking"];
-const activeHabbies = ["Hiking", "Reading"];
-// const activeHabbies = ["Hiking", ...hobbies];
+// const accountingCopy = {
+//   name: "DUMMY",
+//   describe: accounting.describe,
+// };
+// accountingCopy.describe();
 
-activeHabbies.push(...hobbies);
-console.log(activeHabbies);
+class AccountDepartment extends Department {
+  private lastReport: string;
 
-const person = {
-  firstName: "Jack",
-  age: 37,
-};
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("No report found.");
+  }
 
-const copiedPerson = { ...person, gender: "M" };
-console.log(copiedPerson);
+  set mostRecentReport(value: string) {
+    if (value) {
+      this.addReport(value);
+    } else {
+      throw new Error("Please pass valid value for report.");
+    }
+  }
 
-const addMultiNumbers = (...allNumbers: number[]) => {
-  return allNumbers.reduce((curResult, curValue) => {
-    return curResult + curValue;
-  }, 0);
-};
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+    this.lastReport = reports[0];
+  }
 
-const addedNumbers = addMultiNumbers(5, 10, 20, 30, 3.5, 4);
-console.log("result of add multiple numbers --> " + addedNumbers);
+  addEmployee(name: string) {
+    if (name === "Jack") {
+      return;
+    }
 
-// array destructring
-const [hobby1, hobby2, ...remainingHobbies] = activeHabbies;
-console.log("hobby1 -> " + hobby1);
-console.log("hobby2 -> " + hobby2);
-console.log("remainingHobbies -> " + remainingHobbies);
+    this.employees.push(name);
+  }
 
-const { firstName: userName, age } = person;
-console.log(userName, age, person);
+  addReport(text: string) {
+    this.reports.push(text);
+    this.lastReport = text;
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accountingDept = new AccountDepartment("id2", []);
+accountingDept.mostRecentReport = "Report 0"; // "";
+accountingDept.addReport("Report 1");
+console.log(`mostRecentReport : -> ${accountingDept.mostRecentReport}`);
+accountingDept.printReports();
+
+accountingDept.addEmployee("Jack");
+accountingDept.addEmployee("Karle");
+accountingDept.printEmployeeInfo();
+
+console.log(accountingDept);
