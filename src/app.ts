@@ -1,4 +1,4 @@
-class Department {
+abstract class Department {
   //   public id: string;
   //   public name: string;
 
@@ -8,9 +8,7 @@ class Department {
     // this.name = n;
   }
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}) : ${this.name}`);
-  }
+  abstract describe(): void;
 
   addEmployee(employee: string) {
     // this.id = "d2";
@@ -22,11 +20,21 @@ class Department {
       `Total employees are : ${this.employees.length}  -->  ${this.employees}`
     );
   }
+
+  static createEmployee(name: string) {
+    return { name: name };
+  }
 }
+
+const employee1 = Department.createEmployee("Jack 1");
+console.log(employee1);
 
 class ITDepartment extends Department {
   constructor(id: string, public admins: string[]) {
     super(id, "IT");
+  }
+  describe(): void {
+    console.log("IT Department - ID : " + this.id);
   }
 }
 
@@ -48,6 +56,25 @@ console.log(itDept);
 // accountingCopy.describe();
 
 class AccountDepartment extends Department {
+  private static instance: AccountDepartment;
+
+  private constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+    this.lastReport = reports[0];
+  }
+
+  static getInstance() {
+    if (AccountDepartment.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountDepartment("id3", []);
+    return this.instance;
+  }
+
+  describe(): void {
+    console.log("Account Department - ID : " + this.id);
+  }
+
   private lastReport: string;
 
   get mostRecentReport() {
@@ -63,11 +90,6 @@ class AccountDepartment extends Department {
     } else {
       throw new Error("Please pass valid value for report.");
     }
-  }
-
-  constructor(id: string, private reports: string[]) {
-    super(id, "Accounting");
-    this.lastReport = reports[0];
   }
 
   addEmployee(name: string) {
@@ -88,7 +110,9 @@ class AccountDepartment extends Department {
   }
 }
 
-const accountingDept = new AccountDepartment("id2", []);
+// const accountingDept = new AccountDepartment("id2", []);
+const accountingDept = AccountDepartment.getInstance();
+accountingDept.describe();
 accountingDept.mostRecentReport = "Report 0"; // "";
 accountingDept.addReport("Report 1");
 console.log(`mostRecentReport : -> ${accountingDept.mostRecentReport}`);
