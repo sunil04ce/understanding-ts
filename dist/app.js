@@ -1,26 +1,45 @@
 "use strict";
-let addFn;
-addFn = (n1, n2) => {
-    return n1 + n2;
+const e1 = {
+    name: "Jack",
+    privileges: ["create-server"],
+    startDate: new Date(),
 };
-class Person {
-    constructor(n) {
-        this.age = 30;
-        if (n) {
-            this.name = n;
-        }
+function addTwoVariable(a, b) {
+    if (typeof a === "string" || typeof b === "string") {
+        return a.toString() + b.toString();
     }
-    greet(phrase) {
-        if (this.name) {
-            console.log(`${phrase} ${this.name}`);
-        }
-        else {
-            console.log("Hi!");
-        }
+    return a + b;
+}
+function printEmployeeInfo(emp) {
+    console.log(emp.name);
+    if ("privileges" in emp) {
+        console.log("Privileges: " + emp.privileges);
+    }
+    if ("startDate" in emp) {
+        console.log("StartDate: " + emp.startDate);
     }
 }
-let user1;
-user1 = new Person("Jack");
-user1.greet("Hi there - I am");
-let user2 = new Person();
-user2.greet("Hi there - ");
+printEmployeeInfo(e1);
+class Car {
+    drive() {
+        console.log("Driving...");
+    }
+}
+class Truck {
+    drive() {
+        console.log("Driving a truck...");
+    }
+    loadCargo(amount) {
+        console.log("Loading cargo..." + amount);
+    }
+}
+const v1 = new Car();
+const v2 = new Truck();
+function useVehicle(vehicle) {
+    vehicle.drive();
+    if (vehicle instanceof Truck) {
+        vehicle.loadCargo(500);
+    }
+}
+useVehicle(v1);
+useVehicle(v2);
