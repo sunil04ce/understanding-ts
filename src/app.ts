@@ -74,3 +74,39 @@ function useVehicle(vehicle: Vehical) {
 
 useVehicle(v1);
 useVehicle(v2);
+
+interface Bird {
+  type: "bird";
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: "horse";
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.type) {
+    case "bird":
+      speed = animal.flyingSpeed;
+      break;
+    case "horse":
+      speed = animal.runningSpeed;
+      break;
+  }
+  console.log("Moving at speed : " + speed);
+}
+
+moveAnimal({ type: "bird", flyingSpeed: 10 });
+
+// const userInputElement = document.getElementById(
+//   "user-input"
+// ) as HTMLInputElement;
+
+const userInputElement = document.getElementById("user-input");
+if (userInputElement) {
+  (userInputElement as HTMLInputElement).value = "Hi there!!";
+}
