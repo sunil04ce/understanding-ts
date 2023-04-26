@@ -1,60 +1,38 @@
 "use strict";
-const names = [];
-const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve("This is done!");
-    }, 2000);
-});
-promise.then((data) => {
-});
-function merge(objA, objB) {
-    return Object.assign(objA, objB);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+function Logger(logstring) {
+    console.log("Logger factory");
+    return function (constructor) {
+        console.log(logstring);
+        console.log(constructor);
+    };
 }
-const mergedObj = merge({ name: "Jack", hobbies: ["Sports"] }, { age: 37 });
-console.log("age -> " + mergedObj.age);
-function countAndDescribe(element) {
-    let descriptionText = "Got no value.";
-    if (element.length === 1) {
-        descriptionText = "Got 1 element.";
-    }
-    else if (element.length > 1) {
-        descriptionText = "Got " + element.length + " elements.";
-    }
-    return [element, descriptionText];
-}
-console.log(countAndDescribe(["Sports", "Cooking"]));
-function extractAndConvert(obj, key) {
-    return "Value :-> " + obj[key];
-}
-console.log(extractAndConvert({ name: "Jack" }, "name"));
-class DataStorage {
-    constructor() {
-        this.data = [];
-    }
-    addItem(item) {
-        this.data.push(item);
-    }
-    removeItem(item) {
-        if (this.data.indexOf(item) === -1) {
-            return;
+function WithTemplate(template, hookId) {
+    console.log("Template factory");
+    return function (constructor) {
+        console.log("rendering template...");
+        const hookEl = document.getElementById(hookId);
+        const p = new constructor();
+        if (hookEl) {
+            hookEl.innerHTML = template;
+            hookEl.querySelector("h1").textContent = p.name;
         }
-        this.data.splice(this.data.indexOf(item), 1);
-    }
-    getItems() {
-        return [...this.data];
-    }
+    };
 }
-const numberStorage = new DataStorage();
-const textStorage = new DataStorage();
-textStorage.addItem("Jack");
-textStorage.addItem("Michel");
-textStorage.removeItem("Jack");
-console.log(textStorage.getItems());
-function createCourseGoal(title, description, date) {
-    let courseGoal = {};
-    courseGoal.title = title;
-    courseGoal.description = description;
-    courseGoal.completeUntil = date;
-    return courseGoal;
-}
-const nameArray = ["Jack", "Anna"];
+let Person2 = class Person2 {
+    constructor() {
+        this.name = "Jack";
+        console.log("Creating person object...");
+    }
+};
+Person2 = __decorate([
+    Logger("LOGGIN - Person2"),
+    WithTemplate("<h1>My Person Object</h1>", "app")
+], Person2);
+const pers = new Person2();
+console.log(pers);
