@@ -130,7 +130,7 @@ class Printer {
 
 const p = new Printer();
 const button = document.querySelector("button")!;
-button.addEventListener("click", p.showMessage);
+// button.addEventListener("click", p.showMessage);
 
 interface ValidatorConfig {
   [property: string]: {
@@ -194,19 +194,19 @@ class Course {
   }
 }
 
-const courseForm = document.querySelector("form")!;
-courseForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const titleEl = document.getElementById("title") as HTMLInputElement;
-  const priceEl = document.getElementById("price") as HTMLInputElement;
+// const courseForm = document.querySelector("form")!;
+// courseForm.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   const titleEl = document.getElementById("title") as HTMLInputElement;
+//   const priceEl = document.getElementById("price") as HTMLInputElement;
 
-  const title = titleEl.value;
-  const price = +priceEl.value;
+//   const title = titleEl.value;
+//   const price = +priceEl.value;
 
-  const createdCourse = new Course(title, price);
-  if (!validate(createdCourse)) {
-    alert("Invalid input, please try again!");
-    return;
-  }
-  console.log(createdCourse);
-});
+//   const createdCourse = new Course(title, price);
+//   if (!validate(createdCourse)) {
+//     alert("Invalid input, please try again!");
+//     return;
+//   }
+//   console.log(createdCourse);
+// });
