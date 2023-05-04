@@ -1,7 +1,5 @@
-"use strict";
-var App;
-(function (App) {
-    new App.ProjectInput();
-    new App.ProjectList("active");
-    new App.ProjectList("finished");
-})(App || (App = {}));
+import { ProjectInput } from "./components/project-input.js";
+import { ProjectList } from "./components/project-list.js";
+new ProjectInput();
+new ProjectList("active");
+new ProjectList("finished");
